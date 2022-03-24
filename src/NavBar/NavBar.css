@@ -1,0 +1,19 @@
+
+.nav-bar {
+    display: flex;
+    justify-content: flex-end;
+    background-color: darkslategray;
+    text-decoration: none;
+}
+
+.nav-buttons {
+    padding: 15px 30px;
+    list-style: none;
+    color: white;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.nav-buttons:hover {
+    background-color: darken(darkslategray, 5%);
+}
