@@ -5,43 +5,20 @@ import {useDispatch, useSelector} from 'react-redux';
 
 
 const Profile = (props) => {
-  const [userInput,setUserInput] = React.useState("");
-  const [passwordInput,setPasswordInput] = React.useState("");
-  const [passwordRetypeInput,setPasswordRetypeInput] = React.useState("");
-  const ActionDispatch = useDispatch();
-  const loginAuth = useSelector((state)=>state);
-  const handleSubmit = (event) => {
-    event.preventDefault(); 
-    console.log(userInput, passwordInput);
-
-    if(userInput.trim() === "") {
-      alert("create a UserName");
-      return;
-    }
-
-    if(passwordInput.trim() === "") {
-      alert("create the Password");
-      return;
-    }
-
-    if(passwordRetypeInput.trim() === "") {
-      alert("Retype the Password");
-      return;
-    }
-
-    if(passwordRetypeInput !== passwordInput) {
-      alert("Created and retyped passwords do not match!");
-      return;
-    }
-
-    ActionDispatch({
-      type:"CREATE",
-      username: userInput.trim(),
-      password: passwordInput.trim()
-    })
-    setUserInput("");
-    setPasswordInput("");
-  }
+  const [userInput,setUserInput] = React.useState({
+    emergency_contact:{
+      name:"",
+      mobile:""
+    },
+    secondary_contact:{
+      name:"",
+      mobile:""
+    },
+    BP:"",
+    diabetes:"",
+    others:""
+  });
+  
   return (  
       <div className="Login">
         <h1 style={{marginBottom:"80px"}}> Profile </h1>
@@ -52,8 +29,15 @@ const Profile = (props) => {
           <input 
             className="input-bar-profile" 
             placeholder="Emergency Contact Name" 
-            onChange={(event)=>{setUserInput(event.target.value)}} 
-            value={userInput}
+            onChange={(event)=>{setUserInput({
+              ...userInput,
+              emergency_contact:{
+                name:event.target.value, 
+                mobile:userInput.emergency_contact.mobile
+                }
+              })
+            }} 
+            value={userInput.emergency_contact.name}
             style={{width:"20%"}}
           />
 
@@ -63,8 +47,14 @@ const Profile = (props) => {
           <input 
             className="input-bar-profile" 
             placeholder="Emergency Contact Mobile Number" 
-            onChange={(event)=>{setUserInput(event.target.value)}} 
-            value={userInput}  
+            onChange={(event)=>{setUserInput({
+              ...userInput,
+              emergency_contact:{
+                name: userInput.emergency_contact.name,
+                mobile:event.target.value
+                }
+              })}} 
+            value={userInput.emergency_contact.mobile}  
             style={{width:"20%"}}
           />
         </div>
@@ -76,8 +66,14 @@ const Profile = (props) => {
           <input 
             className="input-bar-profile" 
             placeholder="Secondary Contact Name" 
-            onChange={(event)=>{setUserInput(event.target.value)}} 
-            value={userInput}
+            onChange={(event)=>{setUserInput({
+              ...userInput,
+              secondary_contact:{
+                mobile: userInput.secondary_contact.mobile,
+                name:event.target.value
+                }
+              })}} 
+            value={userInput.secondary_contact.name}
             style={{width:"20%"}}
           />
 
@@ -87,8 +83,14 @@ const Profile = (props) => {
           <input 
             className="input-bar-profile" 
             placeholder="Secondary Contact Mobile Number" 
-            onChange={(event)=>{setUserInput(event.target.value)}} 
-            value={userInput}  
+            onChange={(event)=>{setUserInput({
+              ...userInput,
+              secondary_contact:{
+                name: userInput.secondary_contact.name,
+                mobile:event.target.value
+                }
+              })}} 
+            value={userInput.secondary_contact.mobile}  
             style={{width:"20%"}}
           />
 
@@ -102,8 +104,11 @@ const Profile = (props) => {
           <input 
             className="input-bar-profile" 
             placeholder="Enter your BP value" 
-            onChange={(event)=>{setUserInput(event.target.value)}} 
-            value={userInput}
+            onChange={(event)=>{setUserInput({
+              ...userInput,
+              BP:event.target.value
+              })}} 
+            value={userInput.BP}
           />
         </div>
 
@@ -114,8 +119,11 @@ const Profile = (props) => {
           <input 
             className="input-bar-profile" 
             placeholder="Mention any health issues related to diabetes.." 
-            onChange={(event)=>{setUserInput(event.target.value)}} 
-            value={userInput}
+            onChange={(event)=>{setUserInput({
+              ...userInput,
+              diabetes:event.target.value
+              })}} 
+            value={userInput.diabetes}
           />
         </div>
 
@@ -126,11 +134,18 @@ const Profile = (props) => {
           <textarea 
             className="input-bar-profile" 
             placeholder="Specify any other health issues here.." 
-            onChange={(event)=>{setUserInput(event.target.value)}} 
-            value={userInput}
+            onChange={(event)=>{setUserInput({
+              ...userInput,
+              others:event.target.value
+              })}} 
+            value={userInput.others}
             style={{height:"100px"}}
           />
         </div>
+
+        <button className="login-button">
+          Submit
+        </button>
       </div>
 
       
